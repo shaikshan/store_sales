@@ -1,0 +1,30 @@
+import sys
+
+
+class StoreException(Exception):
+    def __init__(self,error_message:Exception,error_detail:sys):
+        super().__init__(error_message)
+        self.error_message = StoreException.get_detailed_error_message(error_detail=error_detail,error_message=error_message)
+
+
+    @staticmethod
+    def get_detailed_error_message(error_detail:sys,error_message:Exception):
+        """
+        error_message:Exception Object
+        error_detail:sys Object
+        """
+
+        _,_,exec_tb = error_detail.exc_info()
+        exception_block_line_number = exec_tb.tb_frame.f_lineno
+        try_block_line_number = exec_tb.tb_lineno
+        file_name = exec_tb.tb_frame.f_code.co_filename
+        error_message = f"""Error occured in the file:[{file_name}] at try block:[{try_block_line_number}]
+        and exception block:[{exception_block_line_number}] error_message:[{error_message}]"""
+
+        return error_message
+
+    def __str__(self) -> str:
+        return self.error_message
+
+    def __repr__(self) -> str:
+        return StoreException.__name__.str()
