@@ -3,3 +3,4 @@ pymongo
 numpy
 sklearn
 PyYAML
+-e .
